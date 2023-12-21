@@ -12,7 +12,7 @@ public class Genre {
     private int id;
     private String name;
 
-    @ManyToMany (mappedBy="genres")
+    @ManyToMany (mappedBy="genres", fetch = FetchType.EAGER)
     private List<Book> books;
 
     public Genre() {
@@ -46,4 +46,14 @@ public class Genre {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
+
+

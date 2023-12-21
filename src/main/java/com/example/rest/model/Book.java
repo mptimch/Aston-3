@@ -12,24 +12,30 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private int price;
+    private Integer price;
 
     @ManyToOne
     @JoinColumn(name="author_id")
     private Author author;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable (name = "book_genre",
                 joinColumns = @JoinColumn (name = "book_id"), inverseJoinColumns = @JoinColumn (name = "genre_id"))
     private List <Genre> genres;
 
 
     public Book() {}
-    public Book(int id, String name, int price, Author author) {
+    public Book(int id, String name, Integer price, Author author) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.author = author;
+    }
+
+    public Book(int id, String name, Integer price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
     }
 
     public int getId() {
@@ -48,7 +54,7 @@ public class Book {
         this.name = name;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
@@ -70,5 +76,13 @@ public class Book {
 
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

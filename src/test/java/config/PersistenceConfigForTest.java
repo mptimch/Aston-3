@@ -1,9 +1,6 @@
 package config;
 
-import com.github.dockerjava.api.model.ExposedPort;
-import com.github.dockerjava.api.model.HostConfig;
-import com.github.dockerjava.api.model.PortBinding;
-import com.github.dockerjava.api.model.Ports;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -15,9 +12,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -33,11 +28,10 @@ public class PersistenceConfigForTest {
             .withDatabaseName("aston_rest")
             .withUsername("mptimchenko")
             .withPassword("12341990")
-            .withExposedPorts(CONTAINER)
-            .withInitScript("initScript.sql")
-            .withCreateContainerCmdModifier(cmd -> cmd.withHostConfig(new HostConfig().withPortBindings
-                    (new PortBinding(Ports.Binding.bindPort(LOCAL), new ExposedPort(CONTAINER)))
-            ));
+            .withInitScript("initScript.sql");
+//            .withCreateContainerCmdModifier(cmd -> cmd.withHostConfig(new HostConfig().withPortBindings
+//                    (new PortBinding(Ports.Binding.bindPort(LOCAL), new ExposedPort(CONTAINER)))
+//            ));
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
